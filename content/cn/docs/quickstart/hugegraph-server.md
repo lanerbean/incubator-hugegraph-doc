@@ -307,6 +307,46 @@ Starting HugeGraphServer...
 Connecting to HugeGraphServer (http://127.0.0.1:8080/graphs)....OK
 ```
 
+#### 5.6 MySQL
+
+> 用户需自行安装 MySQL，要求版本 8.0 以上，[下载地址](https://www.mysql.com/downloads/)
+
+安装好MySQL之后，必须创建hugegraph数据库
+
+下载MySQL的驱动包mysql-connector-java-8.0.30.jar，将该驱动包放入HugeGraph-Server的lib目录下，参考[ISSUE](https://github.com/apache/incubator-hugegraph/issues/2175#issuecomment-1479049715)
+
+修改 hugegraph.properties，数据库链接地址，用户名和密码按照实际环境配置
+
+```properties
+backend=mysql
+serializer=mysql
+
+# mysql backend config
+jdbc.driver=com.mysql.cj.jdbc.Driver
+jdbc.url=jdbc:mysql://xxx.xxx.xxx.xxx:3306
+jdbc.username=
+jdbc.password=
+jdbc.reconnect_max_times=3
+jdbc.reconnect_interval=3
+jdbc.sslmode=false
+jdbc.connect_database=hugegraph
+```
+
+初始化数据库（仅第一次启动时需要）
+
+```bash
+cd hugegraph-${version}
+bin/init-store.sh
+```
+
+启动server
+
+```bash
+bin/start-hugegraph.sh
+Starting HugeGraphServer...
+Connecting to HugeGraphServer (http://127.0.0.1:8080/graphs)....OK
+```
+
 > 更多其它后端配置可参考[配置项介绍](/docs/config/config-option)
 
 ### 6 访问Server
